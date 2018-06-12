@@ -13,7 +13,9 @@ public class Book {
 
     private String title;
     private String isbn;
-    private String publisher;
+
+    @OneToOne
+    private Publisher publisher;
 
     // Authors -  Entity
     @ManyToMany
@@ -25,13 +27,13 @@ public class Book {
 
     }
 
-    public Book(String titile, String isbn, String publisher) {
+    public Book(String titile, String isbn, Publisher publisher) {
         this.title = titile;
         this.isbn = isbn;
         this.publisher = publisher;
     }
 
-    public Book(String titile, String isbn, String publisher, Set<Author> authors) {
+    public Book(String titile, String isbn, Publisher publisher, Set<Author> authors) {
         this.title = titile;
         this.isbn = isbn;
         this.publisher = publisher;
@@ -62,11 +64,20 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public String getPublisher() {
+    public Publisher getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(String publisher) {
+    public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
     }
+
+    public Set<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(Set<Author> authors) {
+        this.authors = authors;
+    }
 }
+
