@@ -21,10 +21,17 @@ import java.util.Set;
 public class RecipeServiceImpl implements RecipeService {
 
     private final RecipeRepository recipeRepository;
+
     private final RecipeCommandToRecipe recipeCommandToRecipe;
+
     private final RecipeToRecipeCommand recipeToRecipeCommand;
 
-    public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeCommandToRecipe recipeCommandToRecipe, RecipeToRecipeCommand recipeToRecipeCommand) {
+
+    public RecipeServiceImpl(
+            RecipeRepository recipeRepository,
+            RecipeToRecipeCommand recipeToRecipeCommand,
+            RecipeCommandToRecipe recipeCommandToRecipe
+    ) {
         this.recipeRepository = recipeRepository;
         this.recipeCommandToRecipe = recipeCommandToRecipe;
         this.recipeToRecipeCommand = recipeToRecipeCommand;
@@ -45,18 +52,18 @@ public class RecipeServiceImpl implements RecipeService {
         Optional<Recipe> recipeOptional = recipeRepository.findById(l);
 
         if (!recipeOptional.isPresent()) {
-            throw new RuntimeException("Recipe Not Found!");
+            throw new RuntimeException("Recipe Not Found #error number #1");
         }
 
         return recipeOptional.get();
     }
 
-    @Override
-    @Transactional
-    public RecipeCommand findCommandById(Long l) {
-        return recipeToRecipeCommand.convert(findById(l));
-    }
-
+    //    @Override
+//    @Transactional
+//    public RecipeCommand findCommandById(Long l) {
+//        return recipeToRecipeCommand.convert(findById(l));
+//    }
+//
     @Override
     @Transactional
     public RecipeCommand saveRecipeCommand(RecipeCommand command) {
@@ -66,9 +73,9 @@ public class RecipeServiceImpl implements RecipeService {
         log.debug("Saved RecipeId:" + savedRecipe.getId());
         return recipeToRecipeCommand.convert(savedRecipe);
     }
-
-    @Override
-    public void deleteById(Long idToDelete) {
-        recipeRepository.deleteById(idToDelete);
-    }
+//
+//    @Override
+//    public void deleteById(Long idToDelete) {
+//        recipeRepository.deleteById(idToDelete);
+//    }
 }
