@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @Setter
 @EqualsAndHashCode(exclude = {"recipe"})
 @Entity
-public class Ingredient {
+public class  Ingredient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
