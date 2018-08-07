@@ -80,7 +80,7 @@ public class IngredientControllerTest {
         when(ingredientService.findByRecipeIdAndIngredientId(anyLong(), anyLong())).thenReturn(ingredientCommand);
 
         //then
-        mockMvc.perform(get("/recipe/1/ingredients/2/show"))
+        mockMvc.perform(get("/recipe/1/ingredient/2/show"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/ingredient/show"))
                 .andExpect(model().attributeExists("ingredient"));
@@ -141,25 +141,20 @@ public class IngredientControllerTest {
                 .param("description", "some string")
         )
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/recipe/2/ingredients/3/show"));
+                .andExpect(view().name("redirect:/recipe/2/ingredient/3/show"));
 
     }
 
     @Test
-    public void testDeleteById() throws Exception {
-        //given
-        Recipe recipe = new Recipe();
-        Ingredient ingredient = new Ingredient();
-        ingredient.setId(3L);
-        recipe.addIngredient(ingredient);
-        ingredient.setRecipe(recipe);
-        Optional<Recipe> recipeOptional = Optional.of(recipe);
-
-        //when
-        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+    public void testDeleteIngredient() throws Exception {
 
         //then
-        verify(recipeRepository, times(1)).findById(anyLong());
-        verify(recipeRepository, times(1)).save(any(Recipe.class));
+        mockMvc.perform(get("/recipe/2/ingredient/3/delete")
+        )
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/recipe/2/ingredients"));
+
+        verify(ingredientService, times(1)).deleteById(anyLong(), anyLong());
+
     }
 }

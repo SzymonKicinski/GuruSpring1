@@ -3,6 +3,8 @@ package guru.springframework.controllers;
 import guru.springframework.commands.IngredientCommand;
 import guru.springframework.commands.RecipeCommand;
 import guru.springframework.commands.UnitOfMeasureCommand;
+import guru.springframework.domain.Ingredient;
+import guru.springframework.domain.Recipe;
 import guru.springframework.services.IngredientService;
 import guru.springframework.services.RecipeService;
 import guru.springframework.services.UnitOfMeasureService;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  * Created by jt on 6/28/17.
@@ -95,7 +99,7 @@ public class IngredientController {
     public String deleteIngredient(@PathVariable String recipeId,
                                    @PathVariable String id){
         log.debug("deleting ingidient id:" + id);
-        ingredientService.deletedById(Long.valueOf(recipeId),Long.valueOf(id));
+        ingredientService.deleteById(Long.valueOf(recipeId),Long.valueOf(id));
         return "redirect:/recipe/" + recipeId + "/ingredients";
     }
 }

@@ -115,13 +115,22 @@ public class IngredientServiceImplTest {
     }
 
     @Test
-    public void testDeleteIngredient() throws Exception {
+    public void testDeleteById() throws Exception {
+        //given
+        Recipe recipe = new Recipe();
+        Ingredient ingredient = new Ingredient();
+        ingredient.setId(3L);
+        recipe.addIngredient(ingredient);
+        ingredient.setRecipe(recipe);
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        //when
+        ingredientService.deleteById(1L, 3L);
 
         //then
-        mockMvc.perform(get("/recipe/2/ingredient/3/delete"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/recipe/2/ingredients"));
-
-        verify(ingredientService, times(1)).deleteById(anyLong(), anyLong());
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, times(1)).save(any(Recipe.class));
     }
 }
